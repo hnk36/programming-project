@@ -6,7 +6,7 @@ int main() {
         cout<<"*";
     }
     cout<<endl;
-    cout<<"                                     CALCULATOR"<<endl;
+    cout<<"CALCULATOR"<<endl;
     for(int i=0;i<90;i++) {
         cout << "*";
     }
