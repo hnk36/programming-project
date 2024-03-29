@@ -1,4 +1,4 @@
-/* my projets is guessing.A guessing game is a type of game where players are
+/* my projets is guessing.   guessing game is a type of game where players are
  * required to guess something, such as a word, a phrase, a number, or a logical sequence.
  * The specifics of the game can vary widely.*/
 #include <iostream>
