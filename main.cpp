@@ -2,7 +2,7 @@
 #include <cmath>
 using namespace std;
 int main() {
-    for(int i=0;i<90;i++) {
+    for(int i=0; i<90 ;i++) {
         cout<<"*";
     }
     cout<<endl;
