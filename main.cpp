@@ -1,88 +1,138 @@
+// Include necessary libraries
 #include <iostream>
 #include <string>
-#include <iomanip>
-#include "code2.cpp"
+#include <map>
+#include <list>
 using namespace std;
-class Student{
-private:
-    string name;
+// Define a Hospital class
+class Hospital{
+    string patientName;
+    int patientAge;
+    string diseaseName;
+    string doctorName;
+    string date;
+    string cardNumber;
 
-    int id;
-    int point[5];
-    string grade[5];
-    string course_Name[5];
-    float Gpa=0.0f;
-    float Total_hours=0;
 public:
-    float mark;
-    void Get_name(string& Name){
-        name = Name;
-    }
-    void Get_id(int& Id){
-        id=Id;
-    }
-    void CalculateGPA(){
-        cout<<"student name: "<<name<<endl;
-        cout<<"student id: "<<id<<endl;
+    // Declare public member functions
+    Hospital(){
 
-        int houre;
-        for(int i=0;i<5;i++){
-            cout<<"Enter course name:";
-            cin>>course_Name[i];
-            cout<<"Enter mark:";
-            cin>>mark;
-            cout<<"Enter  credit hour: ";
-            cin>>houre;
-            if(mark>=0&& mark<=40){
-                point[i]=0;
-                grade[i]="A";
-            }
-            else if(mark>40&& mark<=50){
-                point[i]=1;
-                grade[i]="D";
-            }
-            else if(mark>50&& mark<+65){
-                point[i]=2;
-                grade[i]="C";
-            }
-            else if(mark>65&& mark<=85){
-                point[i]=3;
-                grade[i]="B";
-            }
-            else if(mark>85&& mark<=100){
-                point[i]=4;
-                grade[i]="A";
-            }
-            Total_hours += houre;
-            Gpa += point[i] * houre;
-        }
-Gpa=Gpa/Total_hours;
-        cout<<setw(20)<<"Name"<<setw(20)<<"ID"<<setw(20)<<"course name"<<setw(20)<<"point"<<setw(20)<<"Gpa"<<setw(20)<<Gpa<<endl;
-        for(int i=0;i<5;i++){
-            cout<<setw(20)<<name<<setw(20)<<id<<setw(20)<<course_Name[i]<<setw(20)<<grade[i]<<setw(20)<<point[i]<<setw(20)<<Gpa<<endl;
-        }
-    }
-
-
+    };// Constructor
+    void appointmentsR();// Function to record appointments
+    void displayappointment();// Function to display appointments
+    void searchPatient();// Function to search for a patient
+    void Delete();// Function to delete a patient record
+    void roomNumber()// Function to assign room number (commented out in this code)
 };
+// Declare a map to store hospital data
+map<string,list<string>> lionHospital;
+
+Hospital::Hospital(){
+    // Constructor body is empty in this case
+}
+// Define the appointmentsR function
+void Hospital::appointmentsR(){
+    // This function prompts the user to enter patient details and stores them in the map
+    cout<<"Enter patient name: ";
+    getline(cin, patientName);
+    cout<<"patient age: ";
+    cin>>patientAge;
+    cin.ignore(); // to clear the newline character from the input buffer
+    cout<<"Enter disease name: ";
+    getline(cin, diseaseName);
+    cout<<"Enter card number: ";
+    getline(cin, cardNumber);
+    cout<<"Enter appointments record date: ";
+    getline(cin, date);
+    lionHospital[cardNumber] = {patientName, to_string(patientAge), date, diseaseName};
+    cout<<"\nRecord added successfully\n";
+}
+// Define the displayappointment function
+    void Hospital::displayappointment() {
+    // This function displays all the appointments stored in the map
+        cout<<"Card Number"<<" Patient Name "<<"Age "<<"Date "<<" Disease "<<endl;
+        for(auto it:lionHospital){
+            cout << it.first << " ";
+            for(const auto& item : it.second) {
+                cout << item << " ";
+            }
+            cout << endl;
+        }
+    }
+// Define the searchPatient function
+void Hospital::searchPatient(){
+    // This function prompts the user to enter a card number and searches for it in the map
+    cout <<"Enter card number: ";
+    getline(cin, cardNumber);
+    if(lionHospital.find(cardNumber)!=lionHospital.end()){
+        cout<<"Patient is found"<<endl;
+        cout<<"patient list: ";
+        for(const auto& item : lionHospital[cardNumber]) {
+            cout << item << " ";
+        }
+        cout << endl;
+    } else {
+        cout << "Patient not found" << endl;
+    }
+}
+void Hospital::Delete(){
+    // This function prompts the user to enter a card number and deletes the corresponding record from the map
+    cout<<"Enter patient card number: ";
+    getline(cin, cardNumber);
+    if(lionHospital.find(cardNumber)!=lionHospital.end()){
+        lionHospital.erase(cardNumber);
+        cout<<"Removed patient card number from list"<<endl;
+    }
+    else{
+        cout<<"The patient is not found please insert a card number correctlly"<<endl;
+    }
+}
+/*void Hospital::roomNUmber(){
+    cout<<"Enter patient card number: ";
+    getline(cin, cardNumber);
+    if(lionHospital.find(cardNumber)) {
+        char choice;
+        cout<<"block 1 room"
+        cout<<"Enter your choos: ";
+        cin>>choice;
+
+    }*/
+// Define the main function
 int main(){
-Student student;
-string name;
-int id;
-print();
-cout<<"Enter student name: ";
-cin>>name;
-cout<<"Enter student id: ";
-cin>>id;
-student.Get_name(name);
-student.Get_id(id);
-student.CalculateGPA();
-
-
-
-
-
-
-
+    // Create an instance of Hospital
+    Hospital Patient;
+    // Enter an infinite loop to display a menu and perform actions based on user choice
+    while(true) {
+        cout<<"1) Appointments record\n";
+        cout<<"2) Display appointment\n";
+        cout<<"3) Search patient\n";
+        cout<<"4) Delete patient from patient list\n";
+        cout<<"5) Exit\n";
+        char choice;
+        cout << "Enter choice: ";
+        cin >> choice;
+        cin.ignore(); // to clear the newline character from the input buffer
+        switch (choice) {
+            case '1':
+                Patient.appointmentsR();
+                break;
+            case '2':
+                Patient.displayappointment();
+                break;
+            case '3':
+                Patient.searchPatient();
+                break;
+            case '4':
+                Patient.Delete();
+            case '5':
+                exit(0);// exit the program
+            default:
+                cout << "Invalid choice" << endl;
+                break;
+        }
+    }
     return 0;
 }
+
+
+
