@@ -100,7 +100,8 @@ void Hospital::Delete(){
 // Define the main function
 int main(){
     // Create an instance of Hospital
-    Hospital Patient;
+    Hospital* Patient;
+    patient=new Hospital;
     // Enter an infinite loop to display a menu and perform actions based on user choice
     while(true) {
         cout<<"1) Appointments record\n";
@@ -131,6 +132,7 @@ int main(){
                 break;
         }
     }
+    delete patient; //deallocating object
     return 0;
 }
 
